@@ -21,32 +21,37 @@ class QuestionViewController: UIViewController {
         super.viewDidLoad()
         
         questionsArray.shuffle()
-        
         replaceButton()
         
     }
     
     // -------------------------------------------------------
     
+    // 計算分數
     var score = 0
-    var count = 0
-    
-    // -------------------------------------------------------
-
 
     @IBAction func selectOption(_ sender: UIButton) {
         
         let num = optionButtons.firstIndex(of: sender)!
+        
+        // 檢查自己選的選項是什麼
         print(optionButtons[num].currentTitle!)
         
+        // 如果選對
         if optionButtons[num].currentTitle == questionsArray[count].answer {
+            
+            // 答對檢查用
             print("yes")
+            
+            // 分數增加、目前分數更新
             score += 10
             scoreLabel.text = String(score)
+            
         } else {
+            // 檢查用
             print("no")
         }
-        
+        // 題目數＋１、刷新當前畫面題目
         count += 1
         replaceButton()
 
@@ -54,22 +59,34 @@ class QuestionViewController: UIViewController {
 
 
     // -------------------------------------------------------
+    
+    // 計算當前題目數
+    var count = 0
 
     func replaceButton() {
         
         if count < 10 {
             
+            // 設定目前題號為 count + 1
             currentQuestionLabel.text = "\(count + 1)"
-        
             questionLabel.text = questionsArray[count].question
             
+            // 選項 1 & 2 一定會有，不用設條件
             optionButtons[0].setTitle(questionsArray[count].option0, for: .normal)
             optionButtons[1].setTitle(questionsArray[count].option1, for: .normal)
             
+            // 判斷該題選項數量
+            // 如果沒有第三個選項（option2）
             if questionsArray[count].option2 == nil {
+                
+                // 不能按（isEnabled = false）不透明度（.alpha = 0）
                 optionButtons[2].isEnabled = false
                 optionButtons[2].alpha = 0
+                
             } else {
+                
+                // 如果有
+                // 設定選項按鈕文字（怕前一個題目只有兩個選項，如果不在 else 裡面設定就會維持只有兩個選項的狀態）
                 optionButtons[2].setTitle(questionsArray[count].option2, for: .normal)
                 optionButtons[2].isEnabled = true
                 optionButtons[2].alpha = 100
