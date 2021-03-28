@@ -115,12 +115,17 @@ class QuestionViewController: UIViewController {
         
     }
     // -------------------------------------------------------
-
+    
+    
+    // 傳送分數至 ResultViewController
+    // 從 Segue 拉 Action
     @IBSegueAction func jumpToResult(_ coder: NSCoder) -> ResultViewController? {
         
+        // 讓 controller = 要跳去的 Controller 頁面
         let controller = ResultViewController(coder: coder)
-        let final = scoreLabel.text
-        controller?.finalScore = final
+        
+        // 設定要傳送過去的資料為字串的 score
+        controller?.finalScore = String(score)
         return controller
     }
     
